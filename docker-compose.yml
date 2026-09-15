@@ -1,0 +1,22 @@
+services:
+  server:
+    build: ./server
+    environment:
+      PORT: 3001
+      DATABASE_PATH: /app/data/powder.db
+    volumes:
+      - server-data:/app/data
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+
+  web:
+    build: ./web
+    ports:
+      - "8080:80"
+    depends_on:
+      - server
+    restart: unless-stopped
+
+volumes:
+  server-data:
